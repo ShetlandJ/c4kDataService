@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var GroupSchema = require('../models/Schema')
+var Group = require('../models/group')
 
 router.route('/')
 .get(function (req, res) {
@@ -8,11 +10,15 @@ router.route('/')
 
 router.route('/')
 .post(async function (req, res) {
-	result.value.password = hash;
 
-	var newUser = await new User(result.value);
+  var courseName = req.body.courseName;
+  var capacity = req.body.capacity;
+  var students = []
+  var newGroup = new Group(courseName, capacity, students)
 
-	await newUser.save()
+	var dbGroup = await new GroupSchema(newGroup);
+
+	await dbGroup.save()
 })
 
 module.exports = router;

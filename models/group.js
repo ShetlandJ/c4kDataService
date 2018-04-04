@@ -2,7 +2,7 @@ const Queue = require('./queue');
 
 class Group {
 
-  constructor(courseName, capacity, students, waitingList) {
+  constructor(courseName, capacity, students) {
     this.courseName = courseName;
     this.capacity = capacity;
     this.students = students;
