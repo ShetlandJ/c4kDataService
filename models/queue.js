@@ -10,7 +10,7 @@ Queue.prototype.add = function(item) {
 }
 
 Queue.prototype.remove = function() {
-  this.data.pop();
+  return this.data.pop();
 }
 
 Queue.prototype.first = function() {

@@ -8,7 +8,6 @@ class Group {
     this.students = students;
     this.waitingList = new Queue();
     this.atCapacity = this.atCapacity()
-    this.remainingClassSpace = this.remainingClassSpace();
   }
 
   atCapacity() {
@@ -21,6 +20,7 @@ class Group {
 
   remainingClassSpace() {
     var classSpace = this.capacity - this.students.length
+
     if (classSpace > 0) {
       return classSpace
     } else {
@@ -28,8 +28,30 @@ class Group {
     }
   }
 
+  addStudent(student) {
+    if (!this.atCapacity && (this.waitingList.data.length === 0)) {
+      this.students.push(student)
+    } else if (!this.atCapacity && (this.waitingList.data.length > 0)) {
+      this.addFromWaitingList()
+    } else {
+      this.addToWaitingList(student);
+    }
+  }
+
+  removeStudent(student) {
+    var studentIndex = this.students.indexOf(student);
+    if (studentIndex > -1) {
+      this.students.splice(studentIndex, 1);
+    }
+  }
+
   addToWaitingList(student) {
     this.waitingList.add(student);
+  }
+
+  addFromWaitingList() {
+    var student = this.waitingList.remove();
+    this.students.push(student);
   }
 }
 
