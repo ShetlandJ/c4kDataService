@@ -3,7 +3,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var cors = require('cors');
-var Group = require('./group');
+var Group = require('./models/group');
+var Student = require('./models/student');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,7 +42,12 @@ const bbStudent4 = {
 
 var basketball = new Group("Basketball", 11, [bbStudent1, bbStudent2, bbStudent3, bbStudent4], [])
 
+var student1 = new Student("Johnny", 12, "james@james.com")
+
 app.get('/', function(req, res) {
+  console.log('########################')
+  console.log(student1);
+  console.log('########################')
 	res.json(basketball);
 });
 
