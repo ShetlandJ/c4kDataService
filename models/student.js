@@ -4,12 +4,7 @@ class Student {
     this.name = name;
     this.age = age;
     this.parentEmail = parentEmail;
-    this.registerDate = this.getDate();
-  }
-
-  getDate(unixTimeStamp) {
-    var now = new Date()
-    return now.getFullYear();
+    this.registerDate = Date.now()
   }
 
 }

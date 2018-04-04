@@ -73,6 +73,7 @@ describe( "Group class tests", function(){
     var student1 = new Student("Kevin", 9, "foo@bar.com")
     var student2 = new Student("Kathleen", 10, "baz@bar.com")
     var student4 = new Student("Pearse", 9, "joe@bloggs.com")
+    var student5 = new Student("Steph", 11, "parent@parent.com")
 
     group3 = new Group("Table Tennis", 2, [student1, student2])
 
@@ -81,10 +82,12 @@ describe( "Group class tests", function(){
     assert.strictEqual(group3.remainingClassSpace(), 1);
 
     group3.addToWaitingList(student4)
-    assert.deepStrictEqual(group3.waitingList.data.length, 1);
+    group3.addToWaitingList(student5)
+    assert.deepStrictEqual(group3.waitingList.data.length, 2);
     group3.addFromWaitingList();
-    assert.deepStrictEqual(group3.waitingList.data.length, 0);
+    assert.deepStrictEqual(group3.waitingList.data.length, 1);
     assert.deepStrictEqual(group3.students.length, 2)
+    assert.strictEqual(group3.waitingList.data[0].name, "Steph")
   });
 
 
