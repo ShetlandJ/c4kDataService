@@ -27,6 +27,29 @@ router.route('/:groupName/details')
   }
 })
 
+router.route('/:groupName/student')
+.post(function (req, res) {
+
+
+  var group = groups.find( group => group.courseName === req.params.groupName)
+
+  if (group) {
+
+    var studentName = req.body.studentName;
+    var studentAge = req.body.studentAge;
+    var parentEmail = req.body.parentEmail
+
+    var newStudent = new Student(studentName, studentAge, parentEmail);
+
+    group.addStudent(newStudent)
+    res.json(group)
+  } else {
+    return res.status(403).send({
+      error: "Group not found."
+    })
+  }
+})
+
 var student1 = new Student("Kevin", 9, "foo@bar.com")
 var student2 = new Student("Kathleen", 10, "baz@bar.com")
 var student3 = new Student("Sarah", 11, "biz@foo.com")
