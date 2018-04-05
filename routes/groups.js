@@ -1,47 +1,44 @@
 var express = require('express');
 var router = express.Router();
-var GroupSchema = require('../models/Schema')
 var Group = require('../models/group')
+var Student = require('../models/student')
 
 router.route('/')
 .get(function (req, res) {
-  res.json("Hecklo")
+  res.json("hello world")
 })
 
-router.route('/')
-.post(async function (req, res) {
-
-  var courseName = req.body.courseName;
-  var capacity = req.body.capacity;
-  var students = []
-  var newGroup = new Group(courseName, capacity, students)
-
-  var dbGroup = await new GroupSchema(newGroup);
-
-  await dbGroup.save()
-})
-
-router.route('/:groupName')
+router.route('/all')
 .get(async function (req, res) {
-
-  const group = await GroupSchema.findOne({
-    'courseName': req.params.groupName
-  });
-
-  if (!group) {
-
-    return res.status(403).send({
-      success: false
-    });
-
-  }
-
-
-  if (group)
-  return res.status(201).send({
-    success: true
-  })
+  res.json(groups)
 })
 
+router.route('/:groupName/details')
+.get(function (req, res) {
+
+  var group = groups.find( group => group.courseName === req.params.groupName)
+
+  if (group) {
+    res.json(group)
+  } else {
+    return res.status(403).send({
+      error: "Group not found."
+    })
+  }
+})
+
+var student1 = new Student("Kevin", 9, "foo@bar.com")
+var student2 = new Student("Kathleen", 10, "baz@bar.com")
+var student3 = new Student("Sarah", 11, "biz@foo.com")
+var student4 = new Student("Pearse", 9, "joe@bloggs.com")
+
+var students = [student1, student2, student3, student4]
+
+var group1 = new Group("basketball", 11, students)
+var group2 = new Group("table_tennis", 2, [student1, student2])
+
+var groups = [group1, group2]
+
+var result = groups.find( group => group.courseName === 'table_tennis')
 
 module.exports = router;

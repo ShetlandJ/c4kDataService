@@ -20,13 +20,13 @@ app.use(
 	})
 );
 
-const dbUsername = process.env.DB_USERNAME
-const dbPassword = process.env.DB_PASSWORD
+// const dbUsername = process.env.DB_USERNAME
+// const dbPassword = process.env.DB_PASSWORD
+//
+// mongoose.Promise = global.Promise;
+// const mongoUri = `mongodb://${dbUsername}:${dbPassword}@ds135179.mlab.com:35179/c4k`
 
-mongoose.Promise = global.Promise;
-const mongoUri = `mongodb://${dbUsername}:${dbPassword}@ds135179.mlab.com:35179/c4k`
-
-mongoose.connect(mongoUri);
+// mongoose.connect(mongoUri);
 
 var groups = require('./routes/groups')
 
