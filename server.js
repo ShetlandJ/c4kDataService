@@ -20,14 +20,6 @@ app.use(
 	})
 );
 
-// const dbUsername = process.env.DB_USERNAME
-// const dbPassword = process.env.DB_PASSWORD
-//
-// mongoose.Promise = global.Promise;
-// const mongoUri = `mongodb://${dbUsername}:${dbPassword}@ds135179.mlab.com:35179/c4k`
-
-// mongoose.connect(mongoUri);
-
 var groups = require('./routes/groups')
 
 app.use('/', router);
@@ -38,38 +30,8 @@ router.route('/')
 	res.json("Hello")
 })
 
-// router.route('/class/:class')
-// .get(function (req, res) {
-// 	res.json("Hecklo")
-// })
-//
-// router.route('/class')
-// .post(function (req, res) {
-// 	result.value.password = hash;
-//
-// 	var newUser = await new User(result.value);
-//
-// 	await newUser.save()
-// })
-
-
-// app.get('/all', function(req, res) {
-// 	res.json(Group);
-// });
-//
-// app.post('/:group/addStudent', async (req, res) => {
-// 	const group = await User.findOne({
-// 		'name': name
-// 	});
-//
-// })
-
-
-
-
-
-
-
 app.listen(process.env.PORT || 3000, function() {
 	console.log('listening on ' + this.address().port);
 });
+
+module.exports = app;
