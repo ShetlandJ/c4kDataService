@@ -20,18 +20,48 @@ app.use(
 	})
 );
 
-var groups = require('./routes/groups')
+app.all('*', function(req, res,next) {
 
-app.use('/', router);
-app.use('/groups', groups)
+	/**
+	* Response settings
+	* @type {Object}
+	*/
+	var responseSettings = {
+		"AccessControlAllowOrigin": req.headers.origin,
+		"AccessControlAllowHeaders": "Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name",
+		"AccessControlAllowMethods": "POST, GET, PUT, DELETE, OPTIONS",
+		"AccessControlAllowCredentials": true
+	};
 
-router.route('/')
-.get(function (req, res) {
-	res.json("Hello")
-})
+	/**
+	* Headers
+	*/
+	res.header("Access-Control-Allow-Credentials", responseSettings.AccessControlAllowCredentials);
+	res.header("Access-Control-Allow-Origin",  responseSettings.AccessControlAllowOrigin);
+	res.header("Access-Control-Allow-Headers", (req.headers['access-control-request-headers']) ? req.headers['access-control-request-headers'] : "x-requested-with");
+	res.header("Access-Control-Allow-Methods", (req.headers['access-control-request-method']) ? req.headers['access-control-request-method'] : responseSettings.AccessControlAllowMethods);
 
-app.listen(process.env.PORT || 3000, function() {
-	console.log('listening on ' + this.address().port);
+	if ('OPTIONS' == req.method) {
+		res.sendStatus(200);
+	}
+	else {
+		next();
+	}
 });
 
-module.exports = app;
+
+	var groups = require('./routes/groups')
+
+	app.use('/', router);
+	app.use('/groups', groups)
+
+	router.route('/')
+	.get(function (req, res) {
+		res.json("Hello")
+	})
+
+	app.listen(process.env.PORT || 3000, function() {
+		console.log('listening on ' + this.address().port);
+	});
+
+	module.exports = app;
