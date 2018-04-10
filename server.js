@@ -11,12 +11,12 @@ const mongoose = require('mongoose');
 
 require('dotenv').config()
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json({limit: '50mb', type: 'application/json'}));
 
 app.use(
 	cors({
-		origin:  [/*put in the link here*/],
+		origin:  ['http://localhost:8080/'],
 	})
 );
 
